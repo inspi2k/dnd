@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard-dynamic-subset.css" />
+    <script src="https://kit.fontawesome.com/29eedd9d7b.js" crossorigin="anonymous"></script>
+    <script src="./main.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Duck and Drake</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="./">
+                <i class="fa-regular fa-hand-point-up"></i>
+            </a>
+        </div>
+        <div class="list">
+            <div class="user"><span class="curDT"></span> <span class="name"></span> <span class="point"></span>
+                <progress id="loadingbar" value="0" max="1"></progress> <span class="loading"></span><span class="ip_addr"></span>
+            </div>
+            <ul class="links"></ul>
+    </div>
+    </nav>
+    <section><iframe id="nv_window" src=""></iframe></section>
+</body>
+</html> 

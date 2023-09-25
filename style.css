@@ -1,0 +1,172 @@
+:root {
+    --text-color: #f0f4f5;
+    --background-color: #263343;
+    --accent-color: #d49466;
+    --background-active-color: #4ca1ec;
+    --done-color: #dadada;
+    --text-done-color: #ffffff;
+}
+
+body {
+    margin: 0;
+    font-family: "Pretendard", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    letter-spacing: -1px;
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none;
+    white-space: nowrap;
+    color: var(--text-color);
+}
+
+.navbar {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    justify-content: left;
+    align-items: center;
+    padding: 8px 0 8px 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.logo {
+    font-size: 2rem;
+    padding-right: 1rem;
+}
+
+.logo i {
+    color: var(--background-color);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.user {
+    margin:.1rem .5rem;
+    letter-spacing: -.5px;
+    font-size: .9rem;
+}
+
+.user .name {
+    font-weight: 500;
+}
+.user .name a {
+    color: var(--background-color);
+}
+
+.user #loadingbar {
+    width: 4rem;
+}
+.user .loading {
+    font-size: .8rem;
+}
+.user .ip_addr {
+    display: none;
+}
+
+.links {
+    display: flex;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+.links::-webkit-scrollbar-track,
+.links::-webkit-scrollbar,
+.links::-webkit-scrollbar-thumb {
+    display: none;
+    background: transparent url(./m_scrollbar.png) repeat;
+}
+
+.links li {
+    margin: .2rem .3rem .2rem 0;
+    padding:.4rem .7rem;
+    background-color: var(--background-color);
+    border-radius: .5rem;
+    display: inline-block;
+    position: relative;
+    height: 100%;
+}
+.links li a span {
+    font-size: .8rem;
+}
+.links li.active {
+    background-color: var(--background-active-color);
+}
+
+.links li.done {
+    background-color: var(--done-color);
+    pointer-events: none;
+    > a {
+        color: var(--text-done-color);
+    }
+}
+
+
+#nv_window {
+    width: 100vw;
+    height: calc(100vh - 80px);
+    border: 0;
+    border-top: 2px solid var(--background-color);
+}
+
+@media screen and (max-width: 768px) {
+    /* 모바일에서만 가능해야 함 */
+}
+
+
+.ifrm_src {
+    padding: 1rem;
+    font-family: "Pretendard", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    letter-spacing: -1px;
+}
+.ifrm_src h1 {
+    font-weight: 600;
+}
+.ifrm_src h1 span {
+    font-size: 1.2rem;
+    font-weight: 100;
+    letter-spacing: 0;
+}
+.ifrm_src h2 {
+    font-weight: 500;
+    margin: .5rem 0;
+}
+.ifrm_src ul, .ifrm_src ol {
+    padding-left: 1.5rem;
+}
+.ifrm_src li {
+    line-height: 150%;
+    padding-bottom: 1rem;
+    font-size: .9rem;
+}
+.ifrm_src .warning {
+    font-weight: 600;
+    color: #cc0000;
+}
+.ifrm_src .product_btn_link__XRWYu {
+    display: inline-block;
+    padding: 0 14px;
+    margin: 0 2px;
+    border: 1px solid #09ba5c;
+    border-radius: 1px;
+    background-color: #09c762;
+    line-height: 35px;
+    color: #fff;
+    vertical-align: top;
+}
+.ifrm_src .info {
+    font-size: .8rem;
+}
+.ifrm_src p {
+    margin: .2rem 0;
+}
+
+.prevent-click { pointer-events: none; }
+.allow-click { pointer-events: auto; }
