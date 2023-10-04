@@ -66,20 +66,6 @@ if (
       });
     }
   });
-  // loginForm.userid.addEventListener('focus', () => {
-  //   // document.querySelector('p.login-error-msg').style.opacity=0;
-  //   const rm = document.querySelector('p.login-error-msg');
-  //   if (rm != null) rm.remove();
-  // });
-  // loginForm.password.addEventListener('focus', () => {
-  //   const rm = document.querySelector('p.login-error-msg');
-  //   if (rm != null) rm.remove();
-  // });
-  // loginForm.username.addEventListener('focus', () => {
-  //   const rm = document.querySelector('p.login-error-msg');
-  //   if (rm != null) rm.remove();
-  // });
-
   const rm_input = document.querySelectorAll('#login-form input');
   for (let i = 0; i < rm_input.length; i++) {
     rm_input[i].addEventListener('focus', () => {
@@ -87,7 +73,6 @@ if (
       if (rm != null) rm.remove();
     });
   }
-
   document.querySelector('#back-button').addEventListener('click', e => {
     e.preventDefault();
     location.reload();
@@ -747,7 +732,7 @@ async function getIP(json) {
   //return json.ip;
   return ip;
 }
-user_ip = getIP();
+const user_ip = getIP();
 
 async function getClientIP() {
   // console.log('what is my ip?');
@@ -760,7 +745,7 @@ async function getClientIP() {
     console.error(error);
   }
 }
-// user_ip = getClientIP();
+// const user_ip = getClientIP();
 
 //쿠키 저장하는 함수
 function setCookie(key, value, expiredays) {
