@@ -1,47 +1,114 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard-dynamic-subset.css" />
-    <script src="https://kit.fontawesome.com/29eedd9d7b.js" crossorigin="anonymous"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard-dynamic-subset.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/29eedd9d7b.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="./main.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Duck and Drake</title>
-</head>
-<body>
+  </head>
+  <body>
     <main id="login-holder">
-        <div class="login-container">
-            <h1 id="login-header">Duck and Drake</h1>
-            <h2>Login</h2>
-            <form id="login-form" onsubmit="return false;">
-                <input type="text" name="userid" id="userid-field" class="login-form-field" placeholder="ID">
-                <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-                <input type="text" name="username" id="username-field" class="login-form-field hidden" placeholder="Username">
-                <input type="text" name="userteam" id="userteam-field" class="login-form-field hidden" placeholder="Team">
-                <p id="forgot-id"><button type="button" id="forgot-id-button" class="login-form-href">ID 찾기</button></p>
-                <button type="button" id="forgot-id-ok-button" class="login-form-button hidden">Find</button>
-                <input type="submit" value="Login" id="login-form-submit" class="login-form-button">
-                <p id="join-holder">ID가 없으세요? <button type="button" id="join-button" class="login-form-href">등록하기</button></p>
-                <button type="button" id="join-ok-button" class="login-form-button hidden">Join</button>
-                <button type="button" id="back-button" class="login-form-button hidden">Back</button>
-            </form>
-        </div>
+      <div class="login-container">
+        <h1 id="login-header">Duck and Drake <span>v0.2</span></h1>
+        <h2>Login</h2>
+        <form id="login-form" onsubmit="return false;">
+          <input
+            type="text"
+            name="userid"
+            id="userid-field"
+            class="login-form-field"
+            placeholder="ID"
+          />
+          <input
+            type="password"
+            name="password"
+            id="password-field"
+            class="login-form-field"
+            placeholder="Password"
+          />
+          <input
+            type="text"
+            name="username"
+            id="username-field"
+            class="login-form-field hidden"
+            placeholder="Username"
+          />
+          <input
+            type="text"
+            name="userteam"
+            id="userteam-field"
+            class="login-form-field hidden"
+            placeholder="Team"
+          />
+          <p id="forgot-id">
+            <button type="button" id="forgot-id-button" class="login-form-href">
+              ID 찾기
+            </button>
+          </p>
+          <button
+            type="button"
+            id="forgot-id-ok-button"
+            class="login-form-button hidden"
+          >
+            Find
+          </button>
+          <input
+            type="submit"
+            value="Login"
+            id="login-form-submit"
+            class="login-form-button"
+          />
+          <p id="join-holder">
+            ID가 없으세요?
+            <button type="button" id="join-button" class="login-form-href">
+              등록하기
+            </button>
+          </p>
+          <button
+            type="button"
+            id="join-ok-button"
+            class="login-form-button hidden"
+          >
+            Join
+          </button>
+          <button
+            type="button"
+            id="back-button"
+            class="login-form-button hidden"
+          >
+            Back
+          </button>
+        </form>
+      </div>
     </main>
     <nav class="navbar">
-        <div class="logo">
-            <a href="./">
-                <i class="fa-regular fa-hand-point-up"></i>
-            </a>
+      <div class="logo">
+        <a href="./">
+          <i class="fa-regular fa-hand-point-up"></i>
+        </a>
+      </div>
+      <div class="list">
+        <div class="user">
+          <span class="curDT"></span> <span class="name"></span>
+          <span class="point"></span>
+          <progress id="loadingbar" value="0" max="1"></progress>
+          <span class="loading"></span><span class="ip_addr"></span>
         </div>
-        <div class="list">
-            <div class="user"><span class="curDT"></span> <span class="name"></span> <span class="point"></span>
-                <progress id="loadingbar" value="0" max="1"></progress> <span class="loading"></span><span class="ip_addr"></span>
-            </div>
-            <ul class="links"></ul>
-    </div>
+        <ul class="links"></ul>
+      </div>
     </nav>
     <section><iframe id="nv_window" src=""></iframe></section>
-</body>
-</html> 
+  </body>
+</html>
