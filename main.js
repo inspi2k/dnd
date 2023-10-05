@@ -6,6 +6,8 @@ let userteam = '';
 const sheetId = '1D3xNE6orWM4gPSXunAYaf1ohteqJMSEcTkzP5wejfoM';
 const base = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?`;
 
+const ipinfo_token = '4b4ad9aa57e07b'; // for cglab.official@
+
 const links = document.querySelector('.links');
 const ifrm = document.querySelector('#nv_window');
 const progresstime = document.querySelector('.loading');
@@ -343,9 +345,8 @@ async function UpdateInfo() {
       const items = result[1];
 
       // currnet datetime
-      const today = new Date();
       document.querySelector('.curDT').innerHTML = formatDate(
-        today,
+        new Date(),
         'MM/dd(a)hh:mm'
       );
 
@@ -391,7 +392,12 @@ async function UpdateInfo() {
       }
       return prod_count;
     })
-    .then(prod_count => {})
+    .then(prod_count => {
+      // fetch 로 crUrl 가져오기
+      if (prod_count > 0) {
+        // CORS 위반 - proxy도 안 먹음
+      }
+    })
     .finally(() => {
       // logout button
       document.querySelector('.user .name').innerHTML =
@@ -406,7 +412,7 @@ async function UpdateInfo() {
       // 기본 HTML 프레임 소스 로딩
       if (links.children.length > 0) {
         for (let i = 0; i < links.childNodes.length; i++) {
-          links.childNodes[i].firstChild.addEventListener('click', crUrl); //clickEvent);
+          links.childNodes[i].firstChild.addEventListener('click', clickEvent);
         }
       }
       // 상품 클릭 링크 1)없을 때 2)모두 클릭했을 때
@@ -486,12 +492,12 @@ function clickEvent(event) {
   const nvmid = event.currentTarget.getAttribute('data-i');
   const catalog = event.currentTarget.getAttribute('data-t');
   let url_src = '';
-  // console.log (catalog);
+  // console.log(catalog);
   if (catalog != '' && catalog != null) {
     //if (catalog == "PROD") {
-    // url_src = 'https://msearch.shopping.naver.com/catalog/'+catalog;
-    // url_src = 'https://search.shopping.naver.com/gate.nhn?id='+catalog; // 카탈로그로 넘어가는 링크 (PC)
-    // url_src = 'https://search.shopping.naver.com/gate.nhn?id='+nvmid; // 상품으로 넘어가는 링크 (PC)
+    // url_src = 'https://msearch.shopping.naver.com/product/' + catalog;   // ifrm.contentWindow.length이 1로 그대로임
+    // url_src = 'https://search.shopping.naver.com/gate.nhn?id='+catalog;  // 카탈로그로 넘어가는 링크 (PC)
+    // url_src = 'https://search.shopping.naver.com/gate.nhn?id='+nvmid;    // 상품으로 넘어가는 링크 (PC)
     url_src = 'https://msearch.shopping.naver.com/product/' + nvmid;
   } else {
     url_src = 'https://msearch.shopping.naver.com/product/' + nvmid;
@@ -513,6 +519,7 @@ function gsSheetWrite(sheet, node_a) {
     sheet;
   let request = new XMLHttpRequest();
   let data;
+  const today = new Date();
   if (sheet == 'team') {
     data = {
       date: formatDate(today, 'MM-dd'),
@@ -632,6 +639,22 @@ function getAgent() {
 }
 const user_agent = getAgent();
 
+async function getIP(json) {
+  let ip;
+  try {
+    const req = await fetch('https://ipinfo.io/json?token=' + ipinfo_token);
+    const json_ip = await req.json();
+    // console.log('ip=',json_ip.ip)
+    ip = json_ip.ip;
+  } catch (e) {
+    console.error(e);
+  }
+  document.querySelector('.user .ip_addr').innerHTML = ip;
+  //return json.ip;
+  return ip;
+}
+const user_ip = getIP();
+
 async function getClientIP() {
   // console.log('what is my ip?');
   try {
@@ -643,7 +666,7 @@ async function getClientIP() {
     console.error(error);
   }
 }
-const user_ip = getClientIP();
+// const user_ip = getClientIP();
 
 //쿠키 저장하는 함수
 function setCookie(key, value, expiredays) {
