@@ -411,7 +411,7 @@ async function UpdateInfo() {
       // 기본 HTML 프레임 소스 로딩
       if (links.children.length > 0) {
         for (let i = 0; i < links.childNodes.length; i++) {
-          links.childNodes[i].firstChild.addEventListener('click', crUrl); //clickEvent);
+          links.childNodes[i].firstChild.addEventListener('click', clickEvent);
         }
       }
       // 상품 클릭 링크 1)없을 때 2)모두 클릭했을 때
@@ -444,38 +444,38 @@ const userlist = UpdateInfo();
 
 // 4. 리워드 프로그램 루틴
 ifrm.addEventListener('load', e => {
-  // if (ifrm.contentWindow.length == 0) {
-  const node_li = window.parent.document.querySelector('.active');
-  if (node_li != null) {
-    timeleft = 1;
-    timer = setInterval(() => {
-      if (timeleft >= timemax) {
-        progresstime.innerHTML = '';
-        progressbar.value = 0;
-        // node_li.firstChild.removeEventListener('click', clickEvent);
-        node_li.firstChild.removeEventListener('click', crUrl); //clickEvent);
-        today_point += Number(node_li.firstChild.getAttribute('data-p')); // 업체마다의 point를 읽어와야 함 // 개인별 추가 point 계산해야함
-        gsSheetWrite('team', node_li.firstChild);
-        node_li.remove();
-        ifrm.classList.remove('prevent-click');
-        if (links.children.length < 1) {
-          const li = document.createElement('li');
-          li.setAttribute('class', 'done');
-          li.textContent = '완료';
-          links.append(li);
+  if (ifrm.contentWindow.length == 0) {
+    const node_li = window.parent.document.querySelector('.active');
+    if (node_li != null) {
+      timeleft = 1;
+      timer = setInterval(() => {
+        if (timeleft >= timemax) {
+          progresstime.innerHTML = '';
+          progressbar.value = 0;
+          // node_li.firstChild.removeEventListener('click', clickEvent);
+          node_li.firstChild.removeEventListener('click', clickEvent);
+          today_point += Number(node_li.firstChild.getAttribute('data-p')); // 업체마다의 point를 읽어와야 함 // 개인별 추가 point 계산해야함
+          gsSheetWrite('team', node_li.firstChild);
+          node_li.remove();
+          ifrm.classList.remove('prevent-click');
+          if (links.children.length < 1) {
+            const li = document.createElement('li');
+            li.setAttribute('class', 'done');
+            li.textContent = '완료';
+            links.append(li);
 
-          ifrm.src = 'ifrm_done.html';
+            ifrm.src = 'ifrm_done.html';
+          }
+          clearInterval(timer);
+          return;
         }
-        clearInterval(timer);
-        return;
-      }
-      ifrm.classList.add('prevent-click');
-      progresstime.innerHTML = timeleft + 's';
-      progressbar.value = timeleft;
-      timeleft++;
-    }, 1000);
+        ifrm.classList.add('prevent-click');
+        progresstime.innerHTML = timeleft + 's';
+        progressbar.value = timeleft;
+        timeleft++;
+      }, 1000);
+    }
   }
-  // }
 });
 // catalog
 //  pc (O) https://search.shopping.naver.com/gate.nhn?id=41836294251
@@ -494,9 +494,9 @@ function clickEvent(event) {
   // console.log(catalog);
   if (catalog != '' && catalog != null) {
     //if (catalog == "PROD") {
-    // url_src = 'https://msearch.shopping.naver.com/catalog/'+catalog;
-    // url_src = 'https://search.shopping.naver.com/gate.nhn?id='+catalog; // 카탈로그로 넘어가는 링크 (PC)
-    // url_src = 'https://search.shopping.naver.com/gate.nhn?id='+nvmid; // 상품으로 넘어가는 링크 (PC)
+    // url_src = 'https://msearch.shopping.naver.com/product/' + catalog;   // ifrm.contentWindow.length이 1로 그대로임
+    // url_src = 'https://search.shopping.naver.com/gate.nhn?id='+catalog;  // 카탈로그로 넘어가는 링크 (PC)
+    // url_src = 'https://search.shopping.naver.com/gate.nhn?id='+nvmid;    // 상품으로 넘어가는 링크 (PC)
     url_src = 'https://msearch.shopping.naver.com/product/' + nvmid;
   } else {
     url_src = 'https://msearch.shopping.naver.com/product/' + nvmid;
@@ -520,7 +520,7 @@ async function crUrl(event) {
 
   const encText = encodeURIComponent(keyword);
   let base = '';
-  const proxy = 'https://cors-anywhere.herokuapp.com/';
+  const proxy = ''; //https://cors-anywhere.herokuapp.com/';
 
   if (
     navigator.userAgent.indexOf('iPhone') != -1 &&
@@ -558,6 +558,7 @@ async function crUrl(event) {
       try {
         response = await fetch(url, {
           headers: {
+            origin: 'http://127.0.0.1:5500/',
             sbth: '6bc7553b8fa3e04779448fd212e42bb4aebb8e12f9921518484e099ef1b8527f06380410bf9f45558f4321f3e92af165',
           },
         });
@@ -566,7 +567,7 @@ async function crUrl(event) {
         // console.log(items);
       } catch (error) {
         console.error('failure', error);
-        location.reload();
+        // location.reload();
       }
 
       for (let i = 0; i < items.length; i++) {
