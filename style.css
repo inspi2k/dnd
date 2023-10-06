@@ -243,34 +243,6 @@ a {
   border: 1px solid #8a0000;
   background-color: #e58f8f;
 }
-#login-error-msg-holder {
-  /*  */
-  width: 100%;
-  height: 100%;
-  display: grid;
-  justify-items: center;
-  align-items: center;
-}
-#login-error-msg {
-  /*  */
-  width: 100%;
-  text-align: center;
-  margin: 0.5rem 0;
-  padding: 0.4rem;
-  box-sizing: border-box;
-  font-size: 0.8rem;
-  font-weight: bold;
-  letter-spacing: 0;
-  color: #8a0000;
-  border: 1px solid #8a0000;
-  background-color: #e58f8f;
-  opacity: 0;
-}
-/* #error-msg-second-line { */
-#login-error-msg span {
-  /*  */
-  display: block;
-}
 #login-form {
   align-self: flex-start;
   display: grid;
@@ -299,11 +271,12 @@ a {
   outline: none;
   padding: 0 0 0.5rem 0.5rem;
   width: 95%;
+  font-size: 1.2rem;
 }
 /* #login-form-submit { */
 .login-form-button {
   width: 100%;
-  padding: 0.6rem;
+  padding: 1.2rem 0.6rem;
   margin: 0.5rem 0;
   border: none;
   border-radius: 0.5rem;
@@ -312,6 +285,7 @@ a {
   background-color: #3a3a3a;
   cursor: pointer;
   outline: none;
+  font-size: 1.1rem;
 }
 .login-form-href {
   border: 0;
