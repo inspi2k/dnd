@@ -395,6 +395,7 @@ async function UpdateInfo() {
     .then(prod_count => {
       // fetch 로 crUrl 가져오기
       if (prod_count > 0) {
+        // CORS 위반 - proxy도 안 먹음
       }
     })
     .finally(() => {
@@ -411,7 +412,7 @@ async function UpdateInfo() {
       // 기본 HTML 프레임 소스 로딩
       if (links.children.length > 0) {
         for (let i = 0; i < links.childNodes.length; i++) {
-          links.childNodes[i].firstChild.addEventListener('click', clickEvent);
+          links.childNodes[i].firstChild.addEventListener('click', clickCrUrl);
         }
       }
       // 상품 클릭 링크 1)없을 때 2)모두 클릭했을 때
@@ -444,37 +445,37 @@ const userlist = UpdateInfo();
 
 // 4. 리워드 프로그램 루틴
 ifrm.addEventListener('load', e => {
-  if (ifrm.contentWindow.length == 0) {
-    const node_li = window.parent.document.querySelector('.active');
-    if (node_li != null) {
-      timeleft = 1;
-      timer = setInterval(() => {
-        if (timeleft >= timemax) {
-          progresstime.innerHTML = '';
-          progressbar.value = 0;
-          // node_li.firstChild.removeEventListener('click', clickEvent);
-          node_li.firstChild.removeEventListener('click', clickEvent);
-          today_point += Number(node_li.firstChild.getAttribute('data-p')); // 업체마다의 point를 읽어와야 함 // 개인별 추가 point 계산해야함
-          gsSheetWrite('team', node_li.firstChild);
-          node_li.remove();
-          ifrm.classList.remove('prevent-click');
-          if (links.children.length < 1) {
-            const li = document.createElement('li');
-            li.setAttribute('class', 'done');
-            li.textContent = '완료';
-            links.append(li);
+  // if (ifrm.contentWindow.length == 0) {
+  const node_li = window.parent.document.querySelector('.active');
+  if (node_li != null) {
+    timeleft = 1;
+    timer = setInterval(() => {
+      if (timeleft >= timemax) {
+        progresstime.innerHTML = '';
+        progressbar.value = 0;
+        // node_li.firstChild.removeEventListener('click', clickEvent);
+        node_li.firstChild.removeEventListener('click', clickCrUrl);
+        today_point += Number(node_li.firstChild.getAttribute('data-p')); // 업체마다의 point를 읽어와야 함 // 개인별 추가 point 계산해야함
+        gsSheetWrite('team', node_li.firstChild);
+        node_li.remove();
+        ifrm.classList.remove('prevent-click');
+        if (links.children.length < 1) {
+          const li = document.createElement('li');
+          li.setAttribute('class', 'done');
+          li.textContent = '완료';
+          links.append(li);
 
-            ifrm.src = 'ifrm_done.html';
-          }
-          clearInterval(timer);
-          return;
+          ifrm.src = 'ifrm_done.html';
         }
-        ifrm.classList.add('prevent-click');
-        progresstime.innerHTML = timeleft + 's';
-        progressbar.value = timeleft;
-        timeleft++;
-      }, 1000);
-    }
+        clearInterval(timer);
+        return;
+      }
+      ifrm.classList.add('prevent-click');
+      progresstime.innerHTML = timeleft + 's';
+      progressbar.value = timeleft;
+      timeleft++;
+    }, 1000);
+    // }
   }
 });
 // catalog
@@ -510,7 +511,7 @@ function clickEvent(event) {
   clearInterval(timer);
 }
 
-async function crUrl(event) {
+async function clickCrUrl(event) {
   const category = event.currentTarget.getAttribute('data-c');
   const nvmid = event.currentTarget.getAttribute('data-i');
   const ctmid = event.currentTarget.getAttribute('data-t');
@@ -520,7 +521,7 @@ async function crUrl(event) {
 
   const encText = encodeURIComponent(keyword);
   let base = '';
-  const proxy = ''; //https://cors-anywhere.herokuapp.com/';
+  const proxy = 'https://cors-myinspi.koyeb.app/';
 
   if (
     navigator.userAgent.indexOf('iPhone') != -1 &&
@@ -538,11 +539,9 @@ async function crUrl(event) {
 
   if (category == 'Shopping') {
     // loading spinner start
-    const loading = document.querySelector(
-      '.loadingio-spinner-ripple-5ounsirstrh'
-    );
+    const loader_spinner = document.querySelector('.loader-spinner');
     const sec = document.querySelector('section');
-    loading.style.display = 'block';
+    loader_spinner.style.display = 'block';
     sec.classList.add('is-blurred');
 
     for (let page = 1; page < 20; page++) {
@@ -558,7 +557,6 @@ async function crUrl(event) {
       try {
         response = await fetch(url, {
           headers: {
-            origin: 'http://127.0.0.1:5500/',
             sbth: '6bc7553b8fa3e04779448fd212e42bb4aebb8e12f9921518484e099ef1b8527f06380410bf9f45558f4321f3e92af165',
           },
         });
@@ -581,8 +579,10 @@ async function crUrl(event) {
           progressbar.max = timemax;
           clearInterval(timer);
           // loading spinner end
-          loading.style.display = 'none';
-          sec.classList.remove('is-blurred');
+          setTimeout(() => {
+            sec.classList.remove('is-blurred');
+            loader_spinner.style.display = 'none';
+          }, 1000);
           return true;
         }
       }
